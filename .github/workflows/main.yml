@@ -1,4 +1,4 @@
-name: CI
+name: Loop Test
 
 on:
   workflow_dispatch:
@@ -14,23 +14,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
 
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Download Script
+      - name: Run Infinite Loop Test
         run: |
-          curl -fsSL https://raw.githubusercontent.com/raiyan088/script/main/runner.js -o runner.js
-
-      - name: Install dependency
-        run: npm install ws --no-save --silent
-
-      - name: Run Script
-        env:
-          KEY: ${{ secrets.KEY }}
-          IV: ${{ secrets.IV }}
-        run: node runner.js "$KEY" "$IV"
+          echo "Starting loop..."
+          while true; do
+            date
+            echo "Loop is running..."
+            sleep 60  # wait 1 min
+          done
